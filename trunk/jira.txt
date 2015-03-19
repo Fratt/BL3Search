@@ -1,6 +1,7 @@
 ﻿- HIG: Get access to index NewBDO [SUSPENDED --> Waiting for IT]
-- LOW: Get a repository [IN PROGRESS]
-- MED: NewBDO Connector 
+- HIG: Get a repository [DONE]
+- HIG: Get developement environement ready
+- MED: NewBDO Connector
     - Must index the files from the SMB share.
 	- Users can only see offers they have access to.
 	- We want to extract specific metas from CV.
