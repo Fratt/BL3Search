@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<Widget name="Current Refinements" group="Navigation">
+
+	<Description>Provides the user with the possibility to see the currently active refinements.</Description>
+
+	<Preview>
+		<![CDATA[
+			<img src="/resources/widgets/currentRefinements/preview.png" alt="Current Refinements" />
+		]]>
+	</Preview>
+
+	<Includes />
+
+	<SupportWidgetsId arity="ZERO" />
+	<SupportFeedsId arity="ONE_OR_MANY" />
+
+	<OptionsGroup name="General" />
+
+	<DefaultValues />
+</Widget>
