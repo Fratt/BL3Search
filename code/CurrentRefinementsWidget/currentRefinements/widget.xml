@@ -12,9 +12,13 @@
 	<Includes />
 
 	<SupportWidgetsId arity="ZERO" />
-	<SupportFeedsId arity="ONE_OR_MANY" />
+	<SupportFeedsId arity="MANY" />
 
-	<OptionsGroup name="General" />
+	<OptionsGroup name="General">
+		<Option id="fullCategoryPath" name="Full category path for facets" arity="ZERO_OR_MANY">
+			<Description>For the following facets, we display the entire category path.</Description>
+		</Option>
+	</OptionsGroup>
 
 	<DefaultValues />
 </Widget>
