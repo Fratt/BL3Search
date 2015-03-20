@@ -1,8 +1,8 @@
 ﻿- HIG: Get access to index NewBDO [SUSPENDED --> Waiting for IT]
 - HIG: Get a repository [DONE]
 - HIG: Get developement environement ready [DONE]
-- MED: Current Refinements Widget [IN PROGRESS]
-- MED: Timeline Widget
+- MED: Active Refinements Widget [DONE]
+- MED: Timeline Widget [IN PROGRESS]
 	"Yves m’avait dit être très intéressé par un widget « timeline » qu’il pensait avoir vu dans CloudView (ça me dit rien). Genre, tu cherches « Barack Obama » et tu vois les documents par date sous forme d’histogramme ou encore plus joli. Tu pourrais vérifier comment réaliser ça en recyclant les widgets CloudView voire en développant from scratch ?"
 - MED: NewBDO Connector [SUSPENDED --> Waiting for account]
     - Is a "Files" connector with a PushApi on top.
@@ -11,4 +11,5 @@
 	- We want to extract specific metas from CV.
 - LOW: JSON Connector
 	"Pour après-après : connecteur JSON. Je ne sais pas si t’as joué avec l’API Twitter ; tu peux chercher un truc ou ouvrir le stream et tu obtiens un JSON avec le tweet id, le texte, etc. Pour un tel type de fichier, il serait utile de pouvoir configurer un connecteur où tu indiques comment se structure le JSON et ce qu’il faut garder de la structure."
+- LOW: Improve Active Refinements Widget
 - LOW: Single Sign-On
