@@ -12,4 +12,5 @@
 - LOW: JSON Connector
 	"Pour après-après : connecteur JSON. Je ne sais pas si t’as joué avec l’API Twitter ; tu peux chercher un truc ou ouvrir le stream et tu obtiens un JSON avec le tweet id, le texte, etc. Pour un tel type de fichier, il serait utile de pouvoir configurer un connecteur où tu indiques comment se structure le JSON et ce qu’il faut garder de la structure."
 - LOW: Improve Active Refinements Widget
+	- "tu peux faire en sorte que le font et la couleur du texte dans tes active refinements soit identique à celle de Refinements?"
 - LOW: Single Sign-On

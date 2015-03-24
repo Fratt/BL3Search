@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding='UTF-8'?>
+<Widget name="Timeline" group="Visualizations">
+
+	<Description>Graph about the time distribution of the current results.</Description>
+
+	<Preview>
+		<![CDATA[
+			Timeline
+		]]>
+	</Preview>
+
+	<Includes>
+		<Include type="js" path="js/Chart.min.js" />
+	</Includes>
+
+	<SupportWidgetsId arity="ZERO" />
+	<SupportFeedsId arity="MANY" />
+
+	<OptionsGroup name="General">
+		<Option id="title" name="Widget title" arity="ONE">
+			<Description>Widget title</Description>
+		</Option>
+		<Option id="dateFacet" name="Date facet" arity="ONE">
+			<Description>This facet is used by the graph.</Description>
+		</Option>
+	</OptionsGroup>
+	
+	<DefaultValues>
+		<DefaultValue name="title">Last modification</DefaultValue>
+		<DefaultValue name="dateFacet">lastmodifieddate</DefaultValue>
+	</DefaultValues>
+	
+</Widget>

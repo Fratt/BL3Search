@@ -50,27 +50,29 @@
 								<%-- If not, we print it --%>
 								<c:if test="${!foundSubRefinement}">
 									<li>
-										&nbsp;- <b>${facetLabel}:</b> <!-- ${facet.path} --> 
-										<a href="${categoryUrl}" class="refined">
+										&nbsp;<b>${facetLabel}:</b> <!-- ${facet.path} --> 
 											<c:choose>
 												<c:when test="${displayFullCategoryPath}">
 													<%-- We split the path --%>
 													<c:set var="pathParts" value="${fn:split(fn:substring(category.path, fn:length(facet.path)+1, fn:length(category.path)), '/')}" />
 													<c:set var="currentPath" value="" />
-													<c:forEach var="i" begin="0" end="${fn:length(pathParts) - 1}">
-														<c:set var="currentPath" value="${currentPath}/${pathParts[i]}" />
-														<search:getCategory var="subCategory" categoryPath="${facet.path}${currentPath}" facet="${facet}" iterationMode="ALL" />
-														<search:getCategoryLabel category="${subCategory}" />
-														<c:if test="${i != fn:length(pathParts) - 1}">
-															&gt;
-														</c:if>
-													</c:forEach>
+														<c:forEach var="i" begin="0" end="${fn:length(pathParts) - 1}">
+															<c:set var="currentPath" value="${currentPath}/${pathParts[i]}" />
+															<search:getCategory var="subCategory" categoryPath="${facet.path}${currentPath}" facet="${facet}" iterationMode="ALL" />
+															<search:getCategoryUrl var="subCategoryUrl" category="${subCategory}" feeds="${feeds}" />
+															<a href="${subCategoryUrl}" class="refined">
+																	<search:getCategoryLabel category="${subCategory}" />
+															</a>
+															<c:if test="${i != fn:length(pathParts) - 1}">&nbsp;&gt;&nbsp;</c:if>
+														</c:forEach>
+													</a>
 												</c:when>
 												<c:otherwise>
-													<search:getCategoryLabel category="${category}" />
+													<a href="${categoryUrl}" class="refined">
+														<search:getCategoryLabel category="${category}" />
+													</a>
 												</c:otherwise>
 											</c:choose>
-										</a>
 									</li>
 								</c:if>
 							</c:if>
