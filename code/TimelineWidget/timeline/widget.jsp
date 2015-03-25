@@ -11,7 +11,7 @@
 
 <config:getOption var="dateFacet" name="dateFacet" defaultValue="lastmodifieddate" />
 
-<widget:widget varCssId="cssId">
+<widget:widget varCssId="widgetId">
 	<widget:header>
 		<config:getOption name="title" defaultValue="Timeline" />
 	</widget:header>
@@ -67,49 +67,88 @@
 		return refines;
 	}
 	
-	var goToUrl = function(currentUrl, type, date) {
-		// Year
-		if (type == "y") {
-			location.href = currentUrl + "&cloudview.r=f/${dateFacet}/" + date;
-		// Year + month
-		} else if (type == "m") {
-			var month = date.substring(0, 2);
-			var year = date.substring(3);
-			location.href = currentUrl + "&cloudview.r=f/${dateFacet}/" + year + "/" + month;
-		} else if (type == "d") {
-			var day = date.substring(0, 2);
-			var month = date.substring(3, 5);
-			var year = date.substring(6);
-			location.href = currentUrl + "&cloudview.r=f/${dateFacet}/" + year + "/" + month + "/" + day;
-		}
-		 //alert("TODO: We have to refine by date: " + date + " in url : " + currentUrl);
+	var isDateRefine = function(key, value, facet) {
+		return (key == "cloudview.r" || key == "cloudview.zr") && value.indexOf("f/" + facet) === 0;
 	}
 	
-	var globalData;
+	var goToUrl = function(currentUrl, type, date) {
+	
+		// We remove all the currently active refinements on the facet
+		var questionMark = currentUrl.indexOf("?");
+		var url = currentUrl.substring(0, questionMark+1);
+		var params = get_params(currentUrl.substring(questionMark));
+		for(var key in params) {
+		    var value = params[key];
+			if (typeof value == 'string') {
+				if (!isDateRefine(key, value, "${dateFacet}")) {
+					url += key + "=" + encodeURIComponent(value) + "&";
+				}
+			} else {
+				for (var i=0; i < value.length; i++) {
+					if (!isDateRefine(key, value, "${dateFacet}")) {
+						url += key + "=" + encodeURIComponent(value[i]) + "&";
+					}
+				}
+			}
+		}
+		
+		// We build the url		
+		location.href = url + "cloudview.r=" + "f/${dateFacet}/" + date;
+	}
+	
+	var generateLabel = function(date, type) {
+		if (type == "y") {  // yyyy
+			return date;
+			
+		// Year + month
+		} else if (type == "m") {   // yyyy/mm
+			return date.substring(5, 7) + "." + date.substring(0, 4);
+		
+		// Year + month + day
+		} else if (type == "d") {   // yyyy/mm/dd
+			return date.substring(8) + "." + date.substring(5, 7) + "." + date.substring(2, 4);
+		}
+		
+		// Should never happen
+		alert("Invalid date! Date=" + date + ", type=" + type);
+		return date;
+	}
 
+	var globalJson;
+	var labelToDate = {};
 	
 	// We load the values using ajax, and initialize the graph when we got them
 	$.ajax({
 		url : '<c:url value="/" />timeline/get',
 		dataType: "json",
-		success: function (data, textStatus, jqXHR) {
+		success: function (json, textStatus, jqXHR) {
 		
-			globalData = data;
+			globalJson = json;
 		
 			// We parse the data	
-			var values = data.values;
+			var values = json.values;
 			var labels = new Array();
 			var data = new Array();
 			for (var i=0; i < values.length; i++) {
 				var value = values[i];
-				labels.push(value.name);
-				data.push(value.value);
+				// We generate a label for the graph
+				var label = generateLabel(value.date, json.type);
+				// We push the label and add the date<->label to the mapping
+				labels.push(label);
+				labelToDate[label] = value.date;
+				data.push(value.count);
 			}
+			
+			if (labels.length <= 1 && json.type == "d") {
+				$("#${widgetId}").slideUp();
+				return;
+			}
+			
 		
 			// We initialize the graph
 			var canvas = $("#timelineChart").get(0);
 			var ctx = $("#timelineChart").get(0).getContext("2d");
-			var data = {
+			var chartData = {
 			    labels: labels,
 			    datasets: [
 			        {
@@ -122,20 +161,20 @@
 			        }
 			    ]
 			};
-			var myBarChart = new Chart(ctx).Bar(data, { });
+			var myBarChart = new Chart(ctx).Bar(chartData, { });
 			canvas.onclick = function(evt) {
 		    	var activeBars = myBarChart.getBarsAtEvent(evt);
-		     	goToUrl(location.href, globalData.type, activeBars[0].label);	
+		     	goToUrl(location.href, globalJson.type, labelToDate[activeBars[0].label]);
 			};
 			
 		},
 		error: function () {
 			alert('Error while loading the timeline!');
-			// TODO : We hide the widget instead!
+			$("#${widgetId}").slideUp();
 		},
 		type: "GET",
 		cache:false,
-		data: { "query" : "test", "facet" : "${dateFacet}", "r" : makeSureArray(params["cloudview.r"]), "zr" : makeSureArray(params["cloudview.zr"]) }
+		data: { "query" : params["q"], "facet" : "${dateFacet}", "r" : makeSureArray(params["cloudview.r"]), "zr" : makeSureArray(params["cloudview.zr"]) }
 	});
 	
 	

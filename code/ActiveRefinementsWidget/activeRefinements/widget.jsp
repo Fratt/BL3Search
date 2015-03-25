@@ -50,22 +50,20 @@
 								<%-- If not, we print it --%>
 								<c:if test="${!foundSubRefinement}">
 									<li>
-										&nbsp;<b>${facetLabel}:</b> <!-- ${facet.path} --> 
+										&nbsp;<b>${facetLabel}:</b>  <!-- ${facet.path} --> 
 											<c:choose>
 												<c:when test="${displayFullCategoryPath}">
-													<%-- We split the path --%>
-													<c:set var="pathParts" value="${fn:split(fn:substring(category.path, fn:length(facet.path)+1, fn:length(category.path)), '/')}" />
-													<c:set var="currentPath" value="" />
+													<span style="white-space:nowrap;">
+														<%-- We split the path --%>
+														<c:set var="pathParts" value="${fn:split(fn:substring(category.path, fn:length(facet.path)+1, fn:length(category.path)), '/')}" />
+														<c:set var="currentPath" value="" />
 														<c:forEach var="i" begin="0" end="${fn:length(pathParts) - 1}">
 															<c:set var="currentPath" value="${currentPath}/${pathParts[i]}" />
 															<search:getCategory var="subCategory" categoryPath="${facet.path}${currentPath}" facet="${facet}" iterationMode="ALL" />
 															<search:getCategoryUrl var="subCategoryUrl" category="${subCategory}" feeds="${feeds}" />
-															<a href="${subCategoryUrl}" class="refined">
-																	<search:getCategoryLabel category="${subCategory}" />
-															</a>
-															<c:if test="${i != fn:length(pathParts) - 1}">&nbsp;&gt;&nbsp;</c:if>
+															<a href="${subCategoryUrl}" class="refined"><search:getCategoryLabel category="${subCategory}" /></a><c:if test="${i != fn:length(pathParts) - 1}"><span style="color: #000; font-size: 11px; font-weight: bold;">&nbsp;&gt;</span></c:if>
 														</c:forEach>
-													</a>
+													</span>
 												</c:when>
 												<c:otherwise>
 													<a href="${categoryUrl}" class="refined">

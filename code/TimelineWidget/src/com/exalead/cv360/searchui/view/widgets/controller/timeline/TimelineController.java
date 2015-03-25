@@ -136,7 +136,7 @@ public class TimelineController implements ServletContextAware, NotificationList
 				// If there's more than 1 months, we display the months
 				if (months.size() > 1) {
 					for (Category month : months) {
-						array.put(generateValue(month.getTitle() + "." + year.getTitle(), Integer.toString(month.getCount())));
+						array.put(generateValue(year.getTitle() + "/" + month.getTitle(), Integer.toString(month.getCount())));
 					}
 					type = "m";
 				// If there's only one month, we display the days
@@ -144,7 +144,7 @@ public class TimelineController implements ServletContextAware, NotificationList
 					Category month = months.get(0);
 					List<Category> days = month.getCategories();
 					for (Category day : days) {
-						array.put(generateValue(day.getTitle() + "." + month.getTitle() + "." + year.getTitle(), Integer.toString(day.getCount())));
+						array.put(generateValue(year.getTitle() + "/" + month.getTitle() + "/" + day.getTitle(), Integer.toString(day.getCount())));
 					}
 					type = "d";
 				}
@@ -161,12 +161,12 @@ public class TimelineController implements ServletContextAware, NotificationList
 		response.flushBuffer();
 	}
 	
-	private String last(String string, int length) {
-		if (string != null && string.length() > length) {
-			return string.substring(string.length() - length);
-		}
-		return string;
-	}
+//	private String last(String string, int length) {
+//		if (string != null && string.length() > length) {
+//			return string.substring(string.length() - length);
+//		}
+//		return string;
+//	}
 	
 	private List<String> getSecurityTokens(HttpSession session) {
 		if (MashupSecurityManager.getInstance().isLoggedIn(session)) {
@@ -179,10 +179,10 @@ public class TimelineController implements ServletContextAware, NotificationList
 		return new ArrayList<String>();
 	}
 
-	private JSONObject generateValue(String name, String value) {
+	private JSONObject generateValue(String date, String count) {
 		JSONObject output = new JSONObject();
-		output.put("name", name);
-		output.put("value", value);
+		output.put("date", date);
+		output.put("count", count);
 		return output;
 	}
 
@@ -200,6 +200,7 @@ public class TimelineController implements ServletContextAware, NotificationList
 	// ----------------------------- Exalead code -----------------------------
 
 	private final ReadWriteLock configLock = new ReentrantReadWriteLock();
+	@SuppressWarnings("unused")
 	private MashupConfiguration gctMashupConfiguration = null;
 	private void init() throws Exception {
 		this.configLock.writeLock().lock();
