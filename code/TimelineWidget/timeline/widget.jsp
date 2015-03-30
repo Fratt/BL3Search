@@ -43,6 +43,16 @@
 	
 	var params = get_params(location.search);
 	
+	// Current query (after feed trigger)
+	<search:forEachFeed var="feed" feeds="${feeds}">
+		<c:set var="query" value="${feed.query}"/>
+	</search:forEachFeed>
+	<%-- We escape the quotes --%>
+	<c:set var="a" value="\"" />
+	<c:set var="b" value="\\\"" />
+	var query = "${fn:replace(query, a, b)}";
+	
+	
 	// Turn a string into an array with the string
 	var makeSureArray = function(x) {
 		if (typeof x == 'string') {
@@ -174,7 +184,7 @@
 		},
 		type: "GET",
 		cache:false,
-		data: { "query" : params["q"], "facet" : "${dateFacet}", "r" : makeSureArray(params["cloudview.r"]), "zr" : makeSureArray(params["cloudview.zr"]) }
+		data: { "query" : query, "facet" : "${dateFacet}", "r" : makeSureArray(params["cloudview.r"]), "zr" : makeSureArray(params["cloudview.zr"]) }
 	});
 	
 	
