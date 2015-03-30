@@ -1,16 +1,19 @@
 ﻿- HIG: Get access to index NewBDO [SUSPENDED --> Waiting for IT]
 - HIG: Get a repository [DONE]
 - HIG: Get developement environement ready [DONE]
+- MED: Special treatments for CVs
 - MED: Active Refinements Widget [DONE]
+	"tu peux faire en sorte que le font et la couleur du texte dans tes active refinements soit identique à celle de Refinements?"
 - MED: Timeline Widget [IN PROGRESS]
 	"Yves m’avait dit être très intéressé par un widget « timeline » qu’il pensait avoir vu dans CloudView (ça me dit rien). Genre, tu cherches « Barack Obama » et tu vois les documents par date sous forme d’histogramme ou encore plus joli. Tu pourrais vérifier comment réaliser ça en recyclant les widgets CloudView voire en développant from scratch ?"
+	Add a two before/after date pickers. Use a feed trigger to add the filtering. Read/write from URI.
 - MED: NewBDO Connector [SUSPENDED --> Waiting for account]
-    - Is a "Files" connector with a PushApi on top.
-    - Must index the files from the SMB share.
 	- Users can only see offers they have access to.
 	- We want to extract specific metas from CV.
+- MED: Adapt my tools from SIDRED for this projet.
+- MED: Asynchronous loading for hierarchical facets.
 - LOW: JSON Connector
 	"Pour après-après : connecteur JSON. Je ne sais pas si t’as joué avec l’API Twitter ; tu peux chercher un truc ou ouvrir le stream et tu obtiens un JSON avec le tweet id, le texte, etc. Pour un tel type de fichier, il serait utile de pouvoir configurer un connecteur où tu indiques comment se structure le JSON et ce qu’il faut garder de la structure."
-- LOW: Improve Active Refinements Widget
-	- "tu peux faire en sorte que le font et la couleur du texte dans tes active refinements soit identique à celle de Refinements?"
+	Faire un connecteur JSON abstrait, avec comme example l'implémentation d'un connecteur Twitter.
 - LOW: Single Sign-On
+	- We need to find the AD base

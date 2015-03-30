@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
+import org.apache.log4j.Priority;
 import org.json.JSONArray;
 import org.json.JSONObject;
 import org.springframework.stereotype.Controller;
@@ -50,8 +51,9 @@ public class TimelineController implements ServletContextAware, NotificationList
 	@RequestMapping(value = "/timeline/get", method = RequestMethod.GET)
 	public void get(HttpServletRequest request, HttpServletResponse response, @RequestParam("query") String query, @RequestParam("facet") String facet, @RequestParam(value="r[]", required=false) String[] r, @RequestParam(value="zr[]", required=false) String[] zr) throws IOException {
 		
-		// TODO : We want the current user refinements too!
 		// TODO : If no login, no results!
+		
+		logger.log(Priority.ERROR, query);
 		
 		HttpSession session = request.getSession();
 		
@@ -110,7 +112,7 @@ public class TimelineController implements ServletContextAware, NotificationList
 		try {
 			sa = searchClient.getResults(sq);
 		} catch (SearchClientException e) {
-			logger.error(String.format("Error while obtaining the timeline values for the query \"{}\"", sq));
+			logger.error(String.format("Error while obtaining the timeline values for the query \"%s\"", sq));
 			response.setStatus(HttpServletResponse.SC_INTERNAL_SERVER_ERROR);
 			return;
 		}

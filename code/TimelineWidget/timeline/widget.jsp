@@ -29,12 +29,12 @@
 	  var parse = function(params, pairs) {
 	    var pair = pairs[0];
 	    var parts = pair.split('=');
-	    var key = decodeURIComponent(parts[0]);
-	    var value = decodeURIComponent(parts.slice(1).join('='));
+	    var key = decodeURIComponent(parts[0]).replace(/\+/g, " ");
+	    var value = decodeURIComponent(parts.slice(1).join('=')).replace(/\+/g, " ");
 	    if (typeof params[key] === "undefined") {
-	      params[key] = value;
+	      params[key] = value.trim();
 	    } else {
-	      params[key] = [].concat(params[key], value);
+	      params[key] = [].concat(params[key], value.trim());
 	    }
 	    return pairs.length == 1 ? params : parse(params, pairs.slice(1))
 	  }
@@ -139,7 +139,7 @@
 				data.push(value.count);
 			}
 			
-			if (labels.length <= 1 && json.type == "d") {
+			if (labels.length <= 1 && (!json.hasOwnProperty("type") || json.type == "d")) {
 				$("#${widgetId}").slideUp();
 				return;
 			}
