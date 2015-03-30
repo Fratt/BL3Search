@@ -15,8 +15,8 @@
 	<SupportFeedsId arity="MANY" />
 
 	<OptionsGroup name="General">
-		<Option id="fullCategoryPath" name="Full category path for facets" arity="ZERO_OR_MANY">
-			<Description>For the following facets, we display the entire category path.</Description>
+		<Option id="partialCategoryPath" name="Partial category path for facets" arity="ZERO_OR_MANY">
+			<Description>For the following hierarchical facets, we display only the leaf.</Description>
 		</Option>
 	</OptionsGroup>
 
